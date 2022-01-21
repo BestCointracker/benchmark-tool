@@ -8,12 +8,13 @@ module.exports = {
   ssr: false,
   target: 'static',
   head: {
-    title: 'y',
+    title: 'Benchmark tool',
     meta: [{ charset: 'utf-8' }]
   },
   loading: false,
   plugins: [
-    { ssr: true, src: '@/plugins/icons.js' }
+    { ssr: true, src: '@/plugins/icons.js' },
+    { ssr: true, src: '@/plugins/vuetify.js' }
 
   ],
   buildModules: [

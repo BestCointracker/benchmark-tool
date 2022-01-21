@@ -51,10 +51,12 @@
   "dependencies": {
     "apexcharts": "^3.33.0",
     "autocannon": "^7.6.0",
+    "diskdb": "^0.1.17",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.13.0",
     "vue-apexcharts": "^1.6.2",
+    "vue-timers": "^2.0.4",
     "wrk": "^1.2.1"
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <app-header />
+  <v-app>
+    <p class="text-h3 text-center mt-4">Benchmark tool</p>
     <nuxt />
-  </div>
+  </v-app>
 </template>
 
 <script>
