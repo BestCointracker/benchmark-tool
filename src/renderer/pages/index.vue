@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mainContainer">
     <v-row>
       <v-col cols="4">
         <v-row>
@@ -76,7 +76,7 @@
                 ></v-col>
               </v-row>
               <v-row>
-                <v-col>
+                <v-col cols="9">
                   <v-btn
                     :disabled="blockAll || !valid"
                     @click="runTest"
@@ -95,16 +95,18 @@
                     >Stop test</v-btn
                   >
                 </v-col>
-                <v-card outlined
-                  ><v-card-title>{{ this.time }} ms</v-card-title></v-card
-                >
+                <v-col cols="3">
+                  <div class="timerContainer">
+                    <div class="timer">{{ this.time }} s</div>
+                  </div>
+                </v-col>
               </v-row>
             </v-form>
           </v-col>
         </v-row>
       </v-col>
       <v-col>
-        <v-card id="chartCard" outlined>
+        <v-card id="chartCard" outlined height="550px">
           <v-tabs v-model="tab">
             <v-tab>Latency [ms]</v-tab>
             <v-tab>Request number [req/sec]</v-tab>
@@ -151,6 +153,7 @@
           item-key="_id"
           show-select
           v-model="selected"
+          height="600px"
         >
           <template v-slot:top>
             <v-toolbar flat>
@@ -250,7 +253,7 @@ export default {
       externalContent: "",
       latencyOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
           id: "latency-chart",
@@ -323,7 +326,7 @@ export default {
       latencySeries: [],
       requestsOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
           id: "requests-chart",
@@ -396,7 +399,7 @@ export default {
       requestsSeries: [],
       throughputOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
           id: "throughput-chart",
@@ -494,7 +497,7 @@ export default {
     };
   },
   timers: {
-    log: { time: 10, repeat: true, immediate: false },
+    log: { time: 1000, repeat: true, immediate: false },
   },
   mounted() {
     this.db = db.connect("./db/", ["tests"]);
@@ -631,6 +634,20 @@ export default {
   margin-right: 20px;
 }
 
+.timerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: 1px solid grey; 
+  border-radius: 5px;
+}
+
+.timer {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .container {
   margin-top: 15px;
 }
@@ -638,5 +655,9 @@ export default {
 #chartCard {
   /* border-width: 1px !important; */
   /* border-color: grey !important; */
+}
+
+.mainContainer {
+  max-width: 1200px;
 }
 </style>
