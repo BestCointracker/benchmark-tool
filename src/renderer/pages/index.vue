@@ -639,8 +639,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
-  border: 1px solid grey; 
-  border-radius: 5px;
+  border-bottom: 1px solid grey; 
+  /* border-radius: 5px; */
 }
 
 .timer {
