@@ -181,6 +181,7 @@
             <template v-slot:header="">
               <thead>
                 <tr>
+                  <th colspan="1"></th>
                   <th colspan="6">Parameters</th>
                   <th colspan="3">Latency [ms]</th>
                   <th colspan="3">Requests [req/sec]</th>
