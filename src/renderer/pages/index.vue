@@ -5,102 +5,107 @@
         <v-row>
           <v-col>
             <v-form v-model="valid">
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    :disabled="blockAll"
-                    label="Test name"
-                    placeholder="New test"
-                    outlined
-                    v-model="params.title"
-                    :rules="nameRules"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    :disabled="blockAll"
-                    label="Url"
-                    placeholder="Url"
-                    outlined
-                    v-model="params.url"
-                    :rules="urlRules"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="6">
-                  <v-text-field
-                    :disabled="blockAll"
-                    label="Number of connections"
-                    outlined
-                    v-model="params.connections"
-                    :rules="connectionsRules"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="6"
-                  ><v-text-field
-                    :disabled="!lockAmount || blockAll"
-                    label="Duration [s]"
-                    outlined
-                    :value="lockAmount ? params.duration : '1'"
-                    v-model="params.duration"
-                    :append-icon="lockAmount ? 'mdi-close' : 'mdi-close'"
-                    @click:append="lockAmount = !lockAmount"
-                    :rules="durationRules"
-                  ></v-text-field
-                ></v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="6"
-                  ><v-text-field
-                    :disabled="lockAmount || blockAll"
-                    label="Amount of requests"
-                    outlined
-                    v-model="params.amount"
-                    :value="lockAmount ? '1' : params.amount"
-                    :append-icon="lockAmount ? 'mdi-close' : 'mdi-close'"
-                    @click:append="lockAmount = !lockAmount"
-                    :rules="amountRules"
-                  ></v-text-field
-                ></v-col>
-                <v-col cols="6"
-                  ><v-text-field
-                    :disabled="blockAll"
-                    label="Number of Workers"
-                    outlined
-                    v-model="params.workers"
-                    :rules="workersRules"
-                  ></v-text-field
-                ></v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="9">
-                  <v-btn
-                    :disabled="blockAll || !valid"
-                    @click="runTest"
-                    id="runBtn"
-                    color="blue"
-                    class="white--text"
-                  >
-                    Run test
-                  </v-btn>
+              <v-card outlined height="550px">
+                <v-card-title>Parameters</v-card-title>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        :disabled="blockAll"
+                        label="Test name"
+                        placeholder="New test"
+                        outlined
+                        v-model="params.title"
+                        :rules="nameRules"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        :disabled="blockAll"
+                        label="Url"
+                        placeholder="Url"
+                        outlined
+                        v-model="params.url"
+                        :rules="urlRules"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="6">
+                      <v-text-field
+                        :disabled="blockAll"
+                        label="Number of connections"
+                        outlined
+                        v-model="params.connections"
+                        :rules="connectionsRules"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6"
+                      ><v-text-field
+                        :disabled="!lockAmount || blockAll"
+                        label="Duration [s]"
+                        outlined
+                        :value="lockAmount ? params.duration : '1'"
+                        v-model="params.duration"
+                        :append-icon="lockAmount ? 'mdi-close' : 'mdi-close'"
+                        @click:append="lockAmount = !lockAmount"
+                        :rules="durationRules"
+                      ></v-text-field
+                    ></v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="6"
+                      ><v-text-field
+                        :disabled="lockAmount || blockAll"
+                        label="Amount of requests"
+                        outlined
+                        v-model="params.amount"
+                        :value="lockAmount ? '1' : params.amount"
+                        :append-icon="lockAmount ? 'mdi-close' : 'mdi-close'"
+                        @click:append="lockAmount = !lockAmount"
+                        :rules="amountRules"
+                      ></v-text-field
+                    ></v-col>
+                    <v-col cols="6"
+                      ><v-text-field
+                        :disabled="blockAll"
+                        label="Number of Workers"
+                        outlined
+                        v-model="params.workers"
+                        :rules="workersRules"
+                      ></v-text-field
+                    ></v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="9">
+                      <v-btn
+                        :disabled="blockAll || !valid"
+                        @click="runTest"
+                        id="runBtn"
+                        color="blue"
+                        class="white--text"
+                      >
+                        Run test
+                      </v-btn>
 
-                  <v-btn
-                    :disabled="!blockAll"
-                    @click="stopTest"
-                    color="red"
-                    class="white--text"
-                    >Stop test</v-btn
-                  >
-                </v-col>
-                <v-col cols="3">
-                  <div class="timerContainer">
-                    <div class="timer">{{ this.time }} s</div>
-                  </div>
-                </v-col>
-              </v-row>
+                      <v-btn
+                        :disabled="!blockAll"
+                        @click="stopTest"
+                        color="red"
+                        class="white--text"
+                        >Stop test</v-btn
+                      >
+                    </v-col>
+                    <v-col cols="3">
+                      <div class="timerContainer">
+                        <div class="timer">{{ this.time }} s</div>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card>
             </v-form>
           </v-col>
         </v-row>
@@ -146,46 +151,48 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-data-table
-          :headers="headers"
-          :items="tests"
-          class="elevation-1"
-          item-key="_id"
-          show-select
-          v-model="selected"
-          height="600px"
-        >
-          <template v-slot:top>
-            <v-toolbar flat>
-              <v-toolbar-title>Tests</v-toolbar-title>
-              <v-divider class="mx-4" inset vertical></v-divider>
-              <v-spacer></v-spacer>
-              <v-btn
-                raised
-                outlined
-                text
-                @click="deleteAllTests"
-                color="red"
-                class="white--text"
-                :disabled="!tests.length"
-                >Delete all tests</v-btn
-              >
-            </v-toolbar>
-          </template>
-          <template v-slot:header="">
-            <thead>
-              <tr>
-                <th colspan="6">Parameters</th>
-                <th colspan="3">Latency [ms]</th>
-                <th colspan="3">Requests [req/sec]</th>
-                <th colspan="3">Throughput [bytes/sec]</th>
-              </tr>
-            </thead>
-          </template>
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-icon small @click="deleteTest(item)"> mdi-delete </v-icon>
-          </template>
-        </v-data-table>
+        <v-card outlined>
+          <v-data-table
+            :headers="headers"
+            :items="tests"
+            class="elevation-1"
+            item-key="_id"
+            show-select
+            v-model="selected"
+            height="600px"
+          >
+            <template v-slot:top>
+              <v-toolbar flat>
+                <v-toolbar-title>Tests</v-toolbar-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
+                <v-btn
+                  raised
+                  outlined
+                  text
+                  @click="deleteAllTests"
+                  color="red"
+                  class="white--text"
+                  :disabled="!tests.length"
+                  >Delete all tests</v-btn
+                >
+              </v-toolbar>
+            </template>
+            <template v-slot:header="">
+              <thead>
+                <tr>
+                  <th colspan="6">Parameters</th>
+                  <th colspan="3">Latency [ms]</th>
+                  <th colspan="3">Requests [req/sec]</th>
+                  <th colspan="3">Throughput [bytes/sec]</th>
+                </tr>
+              </thead>
+            </template>
+            <template v-slot:[`item.actions`]="{ item }">
+              <v-icon small @click="deleteTest(item)"> mdi-delete </v-icon>
+            </template>
+          </v-data-table>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -639,7 +646,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
-  border-bottom: 1px solid grey; 
+  border-bottom: 1px solid grey;
   /* border-radius: 5px; */
 }
 
