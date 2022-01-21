@@ -42,7 +42,7 @@ const macOS = {
 }
 
 module.exports = {
-  productName: 'y',
+  productName: 'Benchmark-tool',
   appId: 'com.example.app',
   artifactName: 'setup-${version}.${ext}',
   directories: {
