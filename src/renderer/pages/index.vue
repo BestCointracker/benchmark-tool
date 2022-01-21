@@ -6,7 +6,7 @@
           <v-col>
             <v-form v-model="valid">
               <v-card outlined height="550px">
-                <v-card-title>Parameters</v-card-title>
+                <!-- <v-card-title>Parameters</v-card-title> -->
                 <v-container>
                   <v-row>
                     <v-col cols="12">
