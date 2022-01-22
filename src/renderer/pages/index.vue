@@ -202,22 +202,22 @@
 </template>
 
 <script>
-import VueApexCharts from 'vue-apexcharts'
-import Vue from 'vue'
-import VueTimers from 'vue-timers'
-import SystemInformation from '@/components/SystemInformation.vue'
-const db = require('diskdb')
-Vue.use(VueApexCharts)
-const { ipcRenderer } = require('electron')
-Vue.component('Apexchart', VueApexCharts)
-Vue.use(VueTimers)
+import VueApexCharts from "vue-apexcharts";
+import Vue from "vue";
+import VueTimers from "vue-timers";
+import SystemInformation from "@/components/SystemInformation.vue";
+const db = require("diskdb");
+Vue.use(VueApexCharts);
+const { ipcRenderer } = require("electron");
+Vue.component("Apexchart", VueApexCharts);
+Vue.use(VueTimers);
 
 export default {
-  name: 'IndexPage',
+  name: "IndexPage",
   components: {
-    SystemInformation
+    SystemInformation,
   },
-  data () {
+  data() {
     return {
       valid: true,
       selected: [],
@@ -228,415 +228,416 @@ export default {
       lockAmount: false,
       blockAll: false,
       params: {
-        title: 'New test',
-        url: 'localhost:3000',
+        title: "New test",
+        url: "localhost:3000",
         connections: 10,
         duration: 10,
         amount: 10,
-        workers: 1
+        workers: 1,
       },
-      db: '',
+      db: "",
       headers: [
         {
-          text: 'Test title',
-          align: 'start',
+          text: "Test title",
+          align: "start",
           sortable: false,
-          value: 'title'
+          value: "title",
         },
-        { text: 'Url', value: 'url' },
-        { text: 'Duration [s]', value: 'duration' },
-        { text: 'Connections', value: 'connections' },
-        { text: 'Requests', value: 'requests.sent' },
-        { text: 'Workers', value: 'workers' },
-        { text: 'Average', value: 'latency.average' },
-        { text: 'Mean', value: 'latency.p50' },
-        { text: 'Stdev', value: 'latency.stddev' },
-        { text: 'Average', value: 'requests.average' },
-        { text: 'Mean', value: 'requests.p50' },
-        { text: 'Stdev', value: 'requests.stddev' },
-        { text: 'Average', value: 'throughput.average' },
-        { text: 'Mean', value: 'throughput.p50' },
-        { text: 'Stdev', value: 'throughput.stddev' },
-        { text: 'Actions', value: 'actions', sortable: false }
+        { text: "Url", value: "url" },
+        { text: "Date", value: "start" },
+        { text: "Duration [s]", value: "duration" },
+        { text: "Connections", value: "connections" },
+        { text: "Requests", value: "requests.sent" },
+        { text: "Workers", value: "workers" },
+        { text: "Average", value: "latency.average" },
+        { text: "Mean", value: "latency.p50" },
+        { text: "Stdev", value: "latency.stddev" },
+        { text: "Average", value: "requests.average" },
+        { text: "Mean", value: "requests.p50" },
+        { text: "Stdev", value: "requests.stddev" },
+        { text: "Average", value: "throughput.average" },
+        { text: "Mean", value: "throughput.p50" },
+        { text: "Stdev", value: "throughput.stddev" },
+        { text: "Actions", value: "actions", sortable: false },
       ],
       tests: [],
-      externalContent: '',
+      externalContent: "",
       latencyOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
-          id: 'latency-chart'
+          id: "latency-chart",
         },
         xaxis: {
           title: {
-            text: 'Percentiles'
+            text: "Percentiles",
           },
           categories: [
-            '0.001%',
-            '0.01%',
-            '0.1%',
-            '1%',
-            '2.5%',
-            '10%',
-            '25%',
-            '50%',
-            '75%',
-            '90%',
-            '97.5%',
-            '99%',
-            '99.9%',
-            '99.99%',
-            '99.999%'
+            "0.001%",
+            "0.01%",
+            "0.1%",
+            "1%",
+            "2.5%",
+            "10%",
+            "25%",
+            "50%",
+            "75%",
+            "90%",
+            "97.5%",
+            "99%",
+            "99.9%",
+            "99.99%",
+            "99.999%",
           ],
           axisBorder: {
             show: true,
-            color: '#78909C',
+            color: "#78909C",
             height: 1,
-            width: '100%',
+            width: "100%",
             offsetX: 0,
-            offsetY: 0
-          }
+            offsetY: 0,
+          },
         },
         yaxis: {
           axisTicks: {
-            show: true
+            show: true,
           },
           axisBorder: {
             show: true,
-            color: '#78909C'
+            color: "#78909C",
           },
           title: {
-            text: 'Latency [ms]'
-          }
+            text: "Latency [ms]",
+          },
         },
         grid: {
           show: true,
-          borderColor: '#90A4AE',
+          borderColor: "#90A4AE",
           strokeDashArray: 2,
-          position: 'back',
+          position: "back",
           xaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           yaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           row: {
-            opacity: 1
+            opacity: 1,
           },
           column: {
-            opacity: 1
-          }
-        }
+            opacity: 1,
+          },
+        },
       },
       latencySeries: [],
       requestsOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
-          id: 'requests-chart'
+          id: "requests-chart",
         },
         xaxis: {
           categories: [
-            '0.001%',
-            '0.01%',
-            '0.1%',
-            '1%',
-            '2.5%',
-            '10%',
-            '25%',
-            '50%',
-            '75%',
-            '90%',
-            '97.5%',
-            '99%',
-            '99.9%',
-            '99.99%',
-            '99.999%'
+            "0.001%",
+            "0.01%",
+            "0.1%",
+            "1%",
+            "2.5%",
+            "10%",
+            "25%",
+            "50%",
+            "75%",
+            "90%",
+            "97.5%",
+            "99%",
+            "99.9%",
+            "99.99%",
+            "99.999%",
           ],
           axisBorder: {
             show: true,
-            color: '#78909C',
+            color: "#78909C",
             height: 1,
-            width: '100%',
+            width: "100%",
             offsetX: 0,
-            offsetY: 0
+            offsetY: 0,
           },
           title: {
-            text: 'Percentiles'
-          }
+            text: "Percentiles",
+          },
         },
         yaxis: {
           axisTicks: {
-            show: true
+            show: true,
           },
           axisBorder: {
             show: true,
-            color: '#78909C'
+            color: "#78909C",
           },
           title: {
-            text: 'Number of requests [req/sec]'
-          }
+            text: "Number of requests [req/sec]",
+          },
         },
         grid: {
           show: true,
-          borderColor: '#90A4AE',
+          borderColor: "#90A4AE",
           strokeDashArray: 2,
-          position: 'back',
+          position: "back",
           xaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           yaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           row: {
-            opacity: 1
+            opacity: 1,
           },
           column: {
-            opacity: 1
-          }
-        }
+            opacity: 1,
+          },
+        },
       },
       requestsSeries: [],
       throughputOptions: {
         toolbar: {
-          show: true
+          show: true,
         },
         chart: {
-          id: 'throughput-chart'
+          id: "throughput-chart",
         },
         xaxis: {
           categories: [
-            '0.001%',
-            '0.01%',
-            '0.1%',
-            '1%',
-            '2.5%',
-            '10%',
-            '25%',
-            '50%',
-            '75%',
-            '90%',
-            '97.5%',
-            '99%',
-            '99.9%',
-            '99.99%',
-            '99.999%'
+            "0.001%",
+            "0.01%",
+            "0.1%",
+            "1%",
+            "2.5%",
+            "10%",
+            "25%",
+            "50%",
+            "75%",
+            "90%",
+            "97.5%",
+            "99%",
+            "99.9%",
+            "99.99%",
+            "99.999%",
           ],
           axisBorder: {
             show: true,
-            color: '#78909C',
+            color: "#78909C",
             height: 1,
-            width: '100%',
+            width: "100%",
             offsetX: 0,
-            offsetY: 0
+            offsetY: 0,
           },
           title: {
-            text: 'Percentiles'
-          }
+            text: "Percentiles",
+          },
         },
         yaxis: {
           axisTicks: {
-            show: true
+            show: true,
           },
           axisBorder: {
             show: true,
-            color: '#78909C'
+            color: "#78909C",
           },
           title: {
-            text: 'Throughput [bytes/sec]'
-          }
+            text: "Throughput [bytes/sec]",
+          },
         },
         grid: {
           show: true,
-          borderColor: '#90A4AE',
+          borderColor: "#90A4AE",
           strokeDashArray: 2,
-          position: 'back',
+          position: "back",
           xaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           yaxis: {
             lines: {
-              show: true
-            }
+              show: true,
+            },
           },
           row: {
-            opacity: 1
+            opacity: 1,
           },
           column: {
-            opacity: 1
-          }
-        }
+            opacity: 1,
+          },
+        },
       },
       throughputSeries: [],
-      nameRules: [v => !!v || 'This field is required'],
-      urlRules: [v => !!v || 'This field is required'],
+      nameRules: [(v) => !!v || "This field is required"],
+      urlRules: [(v) => !!v || "This field is required"],
       connectionsRules: [
-        v => !!v || 'This field is required',
-        v => (v && v >= 0) || 'Number of connections should be above 0',
-        v =>
-          (v && v <= 2000) || 'Number of connections should not be above 2000'
+        (v) => !!v || "This field is required",
+        (v) => (v && v >= 0) || "Number of connections should be above 0",
+        (v) =>
+          (v && v <= 2000) || "Number of connections should not be above 2000",
       ],
       durationRules: [
         // (v) => !!v || "This field is required",
-        v => (v && v >= 0) || 'Duration should be above 0s',
-        v => (v && v <= 300) || 'Duration should not be above 300s'
+        (v) => (v && v >= 0) || "Duration should be above 0s",
+        (v) => (v && v <= 300) || "Duration should not be above 300s",
       ],
       amountRules: [
         // (v) => !!v || "This field is required",
-        v => (v && v >= 0) || 'Number of requests should be above 0',
-        v =>
-          (v && v <= 2000) || 'Number of requests should not be above 2000'
+        (v) => (v && v >= 0) || "Number of requests should be above 0",
+        (v) =>
+          (v && v <= 2000) || "Number of requests should not be above 2000",
       ],
       workersRules: [
-        v => !!v || 'This field is required',
-        v => (v && v >= 0) || 'Number of workers should be above 0',
-        v => (v && v <= 20) || 'Number of workers should not be above 20'
-      ]
-    }
+        (v) => !!v || "This field is required",
+        (v) => (v && v >= 0) || "Number of workers should be above 0",
+        (v) => (v && v <= 20) || "Number of workers should not be above 20",
+      ],
+    };
   },
   timers: {
-    log: { time: 1000, repeat: true, immediate: false }
+    log: { time: 1000, repeat: true, immediate: false },
   },
   watch: {
-    selected (val) {
-      console.log(val)
+    selected(val) {
+      console.log(val);
       for (const index in val) {
-        const test = val[index]
+        const test = val[index];
         if (!this.alreadyShown.includes(test)) {
-          this.showTest(test)
-          this.alreadyShown.push(test)
+          this.showTest(test);
+          this.alreadyShown.push(test);
         }
       }
-      let i = this.alreadyShown.length
+      let i = this.alreadyShown.length;
       while (i--) {
-        const test = this.alreadyShown[i]
+        const test = this.alreadyShown[i];
         if (!val.includes(test)) {
-          this.deleteTestFromCharts(test)
-          this.alreadyShown.splice(i, 1)
+          this.deleteTestFromCharts(test);
+          this.alreadyShown.splice(i, 1);
         }
       }
-    }
+    },
   },
-  mounted () {
-    this.db = db.connect('./db/', ['tests'])
-    this.tests = db.tests.find()
-    ipcRenderer.on('run-test-reply', (event, result) => {
-      result.workers = this.params.workers
-      this.db.tests.save(result)
-      this.tests.push(result)
-      console.log(this.tests)
-      console.log('test saved')
-      this.blockAll = false
-      this.$timer.stop('log')
-      this.selected.push(result)
-    })
-    ipcRenderer.on('stop-test-reply', (event, result) => {
+  mounted() {
+    this.db = db.connect("./db/", ["tests"]);
+    this.tests = db.tests.find();
+    ipcRenderer.on("run-test-reply", (event, result) => {
+      result.workers = this.params.workers;
+      this.db.tests.save(result);
+      this.tests.push(result);
+      console.log(this.tests);
+      console.log("test saved");
+      this.blockAll = false;
+      this.$timer.stop("log");
+      this.selected.push(result);
+    });
+    ipcRenderer.on("stop-test-reply", (event, result) => {
       if (result) {
-        this.blockAll = false
-        this.$timer.stop('log')
+        this.blockAll = false;
+        this.$timer.stop("log");
       }
-    })
+    });
   },
   methods: {
-    deleteAllTests () {
-      this.db.tests.remove()
-      this.db = db.connect('./db/', ['tests'])
-      this.tests = db.tests.find()
-      this.selected = []
+    deleteAllTests() {
+      this.db.tests.remove();
+      this.db = db.connect("./db/", ["tests"]);
+      this.tests = db.tests.find();
+      this.selected = [];
       // this.alreadyShown.length = 0
     },
-    deleteTestFromCharts (test) {
-      let target = this.latencySeries.find(x => x._id === test._id)
-      this.latencySeries.splice(this.latencySeries.indexOf(target), 1)
+    deleteTestFromCharts(test) {
+      let target = this.latencySeries.find((x) => x._id === test._id);
+      this.latencySeries.splice(this.latencySeries.indexOf(target), 1);
 
-      target = this.requestsSeries.find(x => x._id === test._id)
-      this.requestsSeries.splice(this.requestsSeries.indexOf(target), 1)
+      target = this.requestsSeries.find((x) => x._id === test._id);
+      this.requestsSeries.splice(this.requestsSeries.indexOf(target), 1);
 
-      target = this.throughputSeries.find(x => x._id === test._id)
-      this.throughputSeries.splice(this.throughputSeries.indexOf(target), 1)
+      target = this.throughputSeries.find((x) => x._id === test._id);
+      this.throughputSeries.splice(this.throughputSeries.indexOf(target), 1);
     },
-    deleteTest (test) {
-      console.log(test)
-      this.db.tests.remove({ _id: test._id })
-      this.tests.splice(this.tests.indexOf(test), 1)
-      this.selected.splice(this.tests.indexOf(test), 1)
-      this.alreadyShown.splice(this.tests.indexOf(test), 1)
-      this.deleteTestFromCharts(test)
+    deleteTest(test) {
+      console.log(test);
+      this.db.tests.remove({ _id: test._id });
+      this.tests.splice(this.tests.indexOf(test), 1);
+      this.selected.splice(this.tests.indexOf(test), 1);
+      this.alreadyShown.splice(this.tests.indexOf(test), 1);
+      this.deleteTestFromCharts(test);
     },
-    showTest (test) {
+    showTest(test) {
       const latencySeries = {
         _id: test._id,
         name: test.title,
-        data: []
-      }
+        data: [],
+      };
       for (const property in test.latency) {
-        if (property.includes('p')) {
-          latencySeries.data.push(test.latency[property])
+        if (property.includes("p")) {
+          latencySeries.data.push(test.latency[property]);
         }
       }
-      this.latencySeries.push(latencySeries)
+      this.latencySeries.push(latencySeries);
 
       const requestsSeries = {
         _id: test._id,
         name: test.title,
-        data: []
-      }
+        data: [],
+      };
       for (const property in test.requests) {
-        if (property.includes('p')) {
-          requestsSeries.data.push(test.requests[property])
+        if (property.includes("p")) {
+          requestsSeries.data.push(test.requests[property]);
         }
       }
-      this.requestsSeries.push(requestsSeries)
+      this.requestsSeries.push(requestsSeries);
 
       const throughputSeries = {
         _id: test._id,
         name: test.title,
-        data: []
-      }
+        data: [],
+      };
       for (const property in test.throughput) {
-        if (property.includes('p')) {
-          throughputSeries.data.push(test.throughput[property])
+        if (property.includes("p")) {
+          throughputSeries.data.push(test.throughput[property]);
         }
       }
-      this.throughputSeries.push(throughputSeries)
+      this.throughputSeries.push(throughputSeries);
     },
-    log () {
-      this.time += 1
+    log() {
+      this.time += 1;
     },
-    openURL (url) {
-      window.open(url)
+    openURL(url) {
+      window.open(url);
     },
-    runTest () {
-      this.blockAll = true
-      const params = Object.assign({}, this.params)
-      console.log(params)
+    runTest() {
+      this.blockAll = true;
+      const params = Object.assign({}, this.params);
+      console.log(params);
       if (this.lockAmount) {
-        delete params.amount
+        delete params.amount;
       } else {
-        delete params.duration
+        delete params.duration;
       }
-      ipcRenderer.send('run-test', params)
+      ipcRenderer.send("run-test", params);
       // this.timers.start('log')
-      this.time = 0
-      this.$timer.start('log')
+      this.time = 0;
+      this.$timer.start("log");
     },
-    stopTest () {
-      ipcRenderer.send('stop-test')
-    }
-  }
-}
+    stopTest() {
+      ipcRenderer.send("stop-test");
+    },
+  },
+};
 </script>
 
 <style>
