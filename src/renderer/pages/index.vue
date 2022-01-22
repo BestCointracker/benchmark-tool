@@ -535,6 +535,10 @@ export default {
     this.tests = db.tests.find();
     ipcRenderer.on("run-test-reply", (event, result) => {
       result.workers = this.params.workers;
+      result.start = new Date(result.start)
+        .toISOString()
+        .replace(/T/, " ") // replace T with a space
+        .replace(/\..+/, ""); // delete the dot and everything after
       this.db.tests.save(result);
       this.tests.push(result);
       console.log(this.tests);
