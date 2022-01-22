@@ -194,6 +194,9 @@
             <template #[`item.actions`]="{ item }">
               <v-icon small @click="deleteTest(item)"> mdi-delete </v-icon>
             </template>
+            <template v-slot:[`item.start`]="{ item }">
+              <span>{{ new Date(item.start).toLocaleString() }}</span>
+            </template>
           </v-data-table>
         </v-card>
       </v-col>
@@ -535,10 +538,6 @@ export default {
     this.tests = db.tests.find();
     ipcRenderer.on("run-test-reply", (event, result) => {
       result.workers = this.params.workers;
-      result.start = new Date(result.start)
-        .toISOString()
-        .replace(/T/, " ") // replace T with a space
-        .replace(/\..+/, ""); // delete the dot and everything after
       this.db.tests.save(result);
       this.tests.push(result);
       console.log(this.tests);
