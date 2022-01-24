@@ -19,13 +19,10 @@ app.on('window-all-closed', function () {
 let instance = null
 
 ipcMain.on('run-test', (event, params) => {
-  console.log(params) // prints "ping"
   instance = autocannon(params, (err, results) => {
     if (err) {
       console.error(err)
     } else {
-      console.log('Autocannon result: ')
-      console.log(results)
       event.reply('run-test-reply', results)
     }
   })

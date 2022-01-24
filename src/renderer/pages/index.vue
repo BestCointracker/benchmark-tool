@@ -184,7 +184,7 @@
               <thead>
                 <tr>
                   <th colspan="1" />
-                  <th colspan="6">Parameters</th>
+                  <th colspan="7">Parameters</th>
                   <th colspan="3">Latency [ms]</th>
                   <th colspan="3">Requests [req/sec]</th>
                   <th colspan="3">Throughput [bytes/sec]</th>
@@ -195,7 +195,7 @@
               <v-icon small @click="deleteTest(item)"> mdi-delete </v-icon>
             </template>
             <template v-slot:[`item.start`]="{ item }">
-              <span>{{ new Date(item.start).toLocaleString() }}</span>
+              <span>{{ new Date(item.start).toLocaleString('pl-PL') }}</span>
             </template>
           </v-data-table>
         </v-card>
@@ -515,7 +515,6 @@ export default {
   },
   watch: {
     selected(val) {
-      console.log(val);
       for (const index in val) {
         const test = val[index];
         if (!this.alreadyShown.includes(test)) {
@@ -540,8 +539,6 @@ export default {
       result.workers = this.params.workers;
       this.db.tests.save(result);
       this.tests.push(result);
-      console.log(this.tests);
-      console.log("test saved");
       this.blockAll = false;
       this.$timer.stop("log");
       this.selected.push(result);
@@ -572,7 +569,6 @@ export default {
       this.throughputSeries.splice(this.throughputSeries.indexOf(target), 1);
     },
     deleteTest(test) {
-      console.log(test);
       this.db.tests.remove({ _id: test._id });
       this.tests.splice(this.tests.indexOf(test), 1);
       this.selected.splice(this.tests.indexOf(test), 1);
@@ -625,7 +621,6 @@ export default {
     runTest() {
       this.blockAll = true;
       const params = Object.assign({}, this.params);
-      console.log(params);
       if (this.lockAmount) {
         delete params.amount;
       } else {
