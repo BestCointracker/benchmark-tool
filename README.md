@@ -1,6 +1,6 @@
 # Benchmark tool
 
-Stress test tool written in elctron
+Stress test tool written in electron
 
 > An electron-nuxt project
 
