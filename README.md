@@ -1,4 +1,6 @@
-# y
+# Benchmark tool
+
+Stress test tool written in elctron
 
 > An electron-nuxt project
 
